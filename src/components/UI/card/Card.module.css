@@ -1,0 +1,13 @@
+.card {
+    padding-top: 2rem;
+    text-align: center;
+    margin-left: 25%;
+    margin-bottom: 1rem;
+    width: 25rem;
+    height: 15rem ;
+    background: rgb(255, 182, 182);
+    box-shadow: 0 10px 12px rgba(0, 1, 0, 0.26);
+    border-radius: 10px;
+    opacity: 0.9;
+  }
+  
