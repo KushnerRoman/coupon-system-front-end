@@ -7,6 +7,9 @@ import AuthenticationService from './servicies/authenticationService/Authenticat
 import Login from './components/login/Login';
 import Admin from './components/pages/admin/Admin';
 import AdminHeader from './components/header/adminHeader/AdminHeader';
+import CompanyHeader from './components/header/companyHeader/CompanyHeader';
+import CompanySignup from './components/registration/CompanySignup';
+import Company from './components/pages/company/Company';
 
 
 function App() {
@@ -25,7 +28,7 @@ function App() {
           break;
         case 'ROLE_Company':
           if(!history.location.pathname.includes('/company')){
-            history.push('/admin');
+            history.push('/company');
           }
           break;
         case 'ROLE_Customer':
@@ -49,6 +52,9 @@ const getHeader=()=>{
     <Route path='/admin'>
       <AdminHeader/>
     </Route>
+    <Route path='/company'>
+      <CompanyHeader/>
+    </Route>
   </Switch>)
  
 }
@@ -61,6 +67,16 @@ const displayPage=()=>{
       <Route path='/admin'>
         <Admin />
       </Route>
+      <Route path='/customer'>
+      
+      </Route>
+      <Route path='/company'>
+        <Company />
+      
+      </Route>
+      <Route path='/wellcom/signup/company' >
+        <CompanySignup/>
+      </Route>
     </Switch>
     
   )
@@ -71,7 +87,7 @@ const displayPage=()=>{
   return (
     <Router history={history}>
     <div className="App">
-      
+    
       {getHeader()}
       {displayPage()}
     

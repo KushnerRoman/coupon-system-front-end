@@ -62,10 +62,7 @@ export default function Login() {
             }
              <Card className={classes.login}>
                 <Form onSubmit={doLogin}>
-                    <h1>
-                        <span className="font-weight-bold">CouponStore</span>.com
-                    </h1>
-                    <h2 className="text-center">Wellcom</h2>
+                    
 
                     <div >
                         <FormGroup className={classes.control}>
@@ -80,7 +77,7 @@ export default function Login() {
                         </FormGroup>
 
                         <FormGroup className={classes.control}>
-                            <Label className={classes.label}>Password </Label>
+                            <Label>Password </Label>
                             <Input type="password" placeholder="Password"
                                 name="password" id="password"
                                 value={password} onChange={
@@ -92,17 +89,17 @@ export default function Login() {
                         <Button type="submit" className={classes.btn} >Login</Button>
                     </div>
                 </Form>
-                <Button type="checkbox" className={classes.btn}>
-                    <label>
-                        <Form.Control as="select" onChange={e=>setRole(e.target.value)}>
-                            <option value='0'>Select User Type</option>
+                
+                
+                        <Form.Control size="sm" as="select" className={classes.roleSelect} onChange={e=>setRole(e.target.value)}>
+                            <option  value='0'>Select User Type</option>
                             <option value='ROLE_Customer'>Customer</option>
                             <option value='ROLE_Company'>Company</option>
                             <option value='ROLE_Administrator'>Admin</option> 
 
                         </Form.Control>
-                    </label>
-                </Button>
+                 
+                
             </Card>
         </div>
     )

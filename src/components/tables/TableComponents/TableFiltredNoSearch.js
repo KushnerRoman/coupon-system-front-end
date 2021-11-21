@@ -1,6 +1,6 @@
 import React,{useMemo,useEffect,useState} from 'react'
 
-import {useTable,useSortBy,useFilters,usePagination,useRowSelect, useMountedLayoutEffect} from 'react-table'
+import {useTable,useSortBy,useFilters,usePagination,useRowSelect, useMountedLayoutEffect, useResizeColumns} from 'react-table'
 
 import TableLayer from '../../UI/table/TableLayer'
 import { GlobalFilter } from '../TableComponents/GlobalFilter'
@@ -26,7 +26,7 @@ const {getTableProps,getTableBodyProps,headerGroups,rows ,page,nextPage,previous
                
               }
             
-                },useFilters,useSortBy,usePagination,useRowSelect,hooks => {
+                },useFilters,useSortBy,usePagination,useRowSelect,useResizeColumns,hooks => {
                     hooks.visibleColumns.push(columns => [
 
                       {
@@ -59,15 +59,25 @@ const {getTableProps,getTableBodyProps,headerGroups,rows ,page,nextPage,previous
  useMountedLayoutEffect(() => {
  
     setValues(props.values)
-    setSelectedRowsValue(selectedFlatRows.map(row=>row.values.email))
+    setSelectedRowsValue(selectedFlatRows.map(row=>row.values.id))
    
 
-
+    console.log(values)
     console.log(selectedRowsValue)
 
 },[props.values,selectedFlatRows,setSelectedRowsValue] )
 
 
+// useEffect(() => {
+ 
+//     setValues(props.values)
+//     setSelectedRowsValue(selectedFlatRows.map(row=>row.values.email))
+   
+
+//     console.log(values)
+//     console.log(selectedRowsValue)
+
+// },[props.values,selectedFlatRows,setSelectedRowsValue] )
 
 
 
@@ -80,6 +90,7 @@ const getCellValue = () => {
 const actionAdminBar=()=>{
     return(
         <div className={classes.actionRows}>
+          
             <button  className="btn btn-secondary btn-sm "  onClick={()=>props.onActions(selectedRowsValue)}> Check Selected   </button> 
             
 
@@ -99,7 +110,7 @@ const searchTable=()=>{
            
               
                 
-            <TableLayer>
+            <TableLayer >
                 <button  className="btn btn-secondary btn-sm "  onClick={()=>console.log(selectedRowsValue)}> log ROW  </button> 
                 
                 {
@@ -117,6 +128,13 @@ const searchTable=()=>{
                                     headerGroup.headers.map(column=>(
                                         <th {...column.getHeaderProps(column.getSortByToggleProps)} scope="col">{column.render('Header')}
                                             <div>{column.canFilter? column.render('Filter'):null }</div>
+                                            <div
+                                                    {...column.getResizerProps()}
+                                                    className={`resizer ${
+                                                        column.isResizing ? 'isResizing' : ''
+                                                    }`}
+                                                    />
+                 
                                             <span>
                                                 {
                                                     column.isSorted?(column.isSortedDesc ? 'B':'A'):''
@@ -202,6 +220,7 @@ const searchTable=()=>{
   
         <div>
             {searchTable()}
+        
             
             
         </div>

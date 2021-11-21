@@ -1,47 +1,63 @@
 import React,{useState,useEffect, useRef} from 'react'
 import { Switch,Route } from 'react-router-dom'
 import AdminService from '../../../servicies/adminService/AdminService';
-import { SortingTable } from '../../tables/TableComponents/TableFiltred'
-import { SortingTableNoSearch } from '../../tables/customerColumns/TableFiltredNoSearch';
+
+import { SortingTableNoSearch } from '../../tables/TableComponents/TableFiltredNoSearch';
 import {COMPANY_COLUMNS} from '../../tables/companyColumns/companyColumns'
 import {CUSTOMER_COLUMNS} from '../../tables/customerColumns/customerColumns'
 import history from '../../history';
-
+import AdminSideBar from '../../header/sidebar/adminSidebar/AdminSideBar';
 import Modal from 'react-modal'
-import AdminAction from './companiesAdmin/AdminAction';
+import AdminAction from './actionsAdmin/AdminAction';
+import AdminNewCompany from './actionsAdmin/adminCompanies/careateCompany/AdminNewCompany';
+import AdminNewCustomer from './actionsAdmin/adminCustomers/newCustomer/AdminNewCustomer';
+import { COUPON_COLUMNS } from '../../tables/couponsColumns/couponColumns';
 
 
 export default function Admin() {
     const [companies,setCompanies]=useState([]);
     const [customers,setCustomers]=useState([]);
+    const [coupons,setCoupons]=useState([]);
     const [tableValues,setTableValues]=useState([]);
-
     const [rowValues,setRowValues]=useState({})
     const [showAdminAction,setShowAdminAction]=useState(false);
+    const userRef=useRef();
 
    
 
 
-    const adminTables=()=>{
+    const adminPages=()=>{
         return(
             
 
             <Switch>
             <Route path='/admin/companies'>
-           
+            <button className="btn btn-danger"  onClick={()=>history.push('/admin/newcompany')}>Create Company </button>{' '}
              <SortingTableNoSearch values={companies}  columns={COMPANY_COLUMNS} onActions={(setTableValues)}  onCloseModal={closeModal}/> 
              
             </Route>
+            <Route path='/admin/coupons'>
+            <button className="btn btn-danger"  onClick={()=>history.push('/admin/newcompany')}>Create Company </button>{' '}
+             <SortingTableNoSearch values={coupons}  columns={COUPON_COLUMNS} onActions={(setTableValues)}  onCloseModal={closeModal}/> 
+             
+            </Route>
             <Route path='/admin/customers'>
-               
-                <SortingTable values={customers}  columns={CUSTOMER_COLUMNS} onDelete={handleActionsAdminCompany}/>
+            <button className="btn btn-danger"  onClick={()=>history.push('/admin/newcustomer')}>Create Customer </button>{' '}
+                <SortingTableNoSearch values={customers}  columns={CUSTOMER_COLUMNS} onActions={(setTableValues)}  onCloseModal={closeModal}/>
                 
             </Route>
-            <Switch>
-                <Route path='/admin/actions'>
-                    <AdminAction tableValues={tableValues} toOpen={true}  />
+            <Route path={['/admin/company/actions','/admin/customer/actions','/admin/coupons']}>
+                    <AdminAction tableValues={tableValues} toOpen={true} ref={userRef} />
                 </Route>
-            </Switch>
+                
+                <Route path='/admin/newcompany'>
+                    <AdminNewCompany />
+                </Route>
+                <Route path='/admin/newcustomer'>
+                    <AdminNewCustomer />
+                </Route>
+          
+            
            
             
        
@@ -54,6 +70,19 @@ export default function Admin() {
     const closeModal=()=>{
         setTableValues([])
     }
+     const adminActionsUser=()=>{
+         if(history.location.pathname.includes('/admin/companies') && tableValues.length>0){
+
+            history.push('/admin/company/actions')
+             
+         }if(history.location.pathname.includes('/admin/customers')&& tableValues.length>0){
+
+             history.push('/admin/customer/actions')
+         }if(history.location.pathname.includes('/admin/coupons')&& tableValues.length>0){
+
+            history.push('/admin/customer/actions')
+        }
+     }
 
     const handleActionsAdminCompany = (e) => {
        
@@ -75,26 +104,25 @@ export default function Admin() {
             
     }
 
-    useEffect(()=>{
-           
-            
-                    
-                  fetchCompaniesData();
-                  fetchCustomerData();
-                  
+    async function fetchCoupons(){
+        let reposne = await AdminService.getAllCoupons();
+                setCoupons(reposne.data)
+    }
 
-                  
+    useEffect(()=>{
+                  fetchCompaniesData();
+                  fetchCustomerData();  
+                  fetchCoupons()    
             },[])
            
 
 
     return (
       <div className="subAction" >
+    
          
-          {tableValues.length>0? <button className="btn btn-primary my-1"  onClick={()=>history.push('/admin/actions')}>Actions </button>:null} {' '} 
-          <button className="btn btn-primary my-1"  onClick={()=>history.push('/admin/actions')}>Create Company </button>{' '}
-          <button className="btn btn-primary my-1"  onClick={()=>history.push('/admin/actions')}>Create Customer </button>{' '}
-          {adminTables()}
+          {adminActionsUser()}
+          {adminPages()}
           
   
           

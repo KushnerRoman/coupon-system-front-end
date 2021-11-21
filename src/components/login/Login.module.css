@@ -1,21 +1,49 @@
 .login {
-    width: 60%;
-    height: 27rem;
+    width: 40%;
+    height: 20rem;
     max-width: 40rem;
     margin: 2rem auto;
-    padding: 2rem;
+    
     text-align: center;
   }
   .btn{
     margin-bottom: 0.5rem;
   }
+  .roleSelect{width: 50%;}
+  .roleSelect{
+  
+  min-width: 15ch;
+  max-width: 30ch;
+  border: 1px solid var(--select-border);
+  border-radius: 0.25em;
+  padding: 0.25em 0.5em;
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1.1;
+  margin-left: 20%;
+    background-image:
+    linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    calc(100% - 2.5em) 0.5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1px 1.5em;
+  background-repeat: no-repeat;
+  }
   
   .control {
+    min-width: 15ch;
+    max-width: 30ch;
     margin: 1rem 0;
     display: flex;
     align-items: stretch;
     flex-direction: column;
-    margin-left: 15px;
+    margin-left: 10px;
   }
   
   .control label,
@@ -26,11 +54,13 @@
   .control label {
     font-weight: bold;
     flex: 1;
-    color: #e61111;
+    color: #000000;
     margin-bottom: 0.5rem;
   }
   
   .control input {
+    min-width: 15ch;
+    max-width: 30ch;
     flex: 3;
     font: inherit;
     padding: 0.35rem 0.35rem;

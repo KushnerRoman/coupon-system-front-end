@@ -1,10 +1,8 @@
 import './update-company.css'
 
-import history from '../../../../history';
-import AdminService from '../../../../../servicies/adminService/AdminService';
-import AuthenticationService from '../../../../../servicies/authenticationService/AuthenticationService'
-
-import { values } from 'lodash';
+import history from '../../../../../history'; 
+import AdminService from '../../../../../../servicies/adminService/AdminService'; 
+import AuthenticationService from '../../../../../../servicies/authenticationService/AuthenticationService'; 
 import { useEffect, useState,useLayoutEffect } from 'react';
 import { Field, Formik, Form } from 'formik'
 
@@ -22,7 +20,9 @@ export default function UpdateCompany(props) {
         }
     }
     useLayoutEffect(()=>{
-        setCurrentCompany(props.company)
+
+      setCurrentCompany(props.company)
+        
     },[currentCompany])
 
 const handleSubmit=(values)=>{
@@ -32,6 +32,7 @@ const handleSubmit=(values)=>{
         email:values.email,
         password:values.password
     }
+    console.log(companyToUpdate)
 
     AdminService.updateCompany(companyToUpdate,currentCompany.id).then(
         response=>{
@@ -75,7 +76,7 @@ const handleSubmit=(values)=>{
                             <div className="form-group">
                             
                         
-                                <label id="UpdateCompany-filed ">Name</label>
+                                <label>Name</label>
                                 <Field className="col-sm-6" id="UpdateCompany-filed"
                                     type="name"
                                     name="name"
@@ -93,7 +94,7 @@ const handleSubmit=(values)=>{
                                 <Field className="col-sm-2" id="UpdateCompany-filed"
                                     type="email"
                                     name="email"
-                                    placeholder="Enter your Email"
+                                    placeholder={currentCompany.email}
                                     
                                     required={true}
                                     
@@ -105,7 +106,8 @@ const handleSubmit=(values)=>{
                                 <Field className="col-xl-2" id="UpdateCompany-filed"
                                     type="password"
                                     name="password"
-                                    placeholder="Enter your Password"
+                                    placeholder={currentCompany.password}
+                                    required
                                    
                                 />
                                  <div className="UpdateCompany-seperator"></div>
@@ -115,7 +117,7 @@ const handleSubmit=(values)=>{
 
                             </div>
                            
-                                  <button type="submit" className="btn btn-primary my-1" title="Return" id="UpdateCompany-return" onClick={back}>
+                            <button type="submit" className="btn btn-primary my-1" title="Return" id="UpdateCompany-return" onClick={back}>
                                             ←
                                       </button>
 

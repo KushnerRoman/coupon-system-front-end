@@ -36,5 +36,28 @@ class AdminService{
       )
     }
 
+    async createCompany(newCompany){
+      return await axios.put("http://localhost:8080/apis/adminController/addcompany",
+      newCompany,{headers:{'Content-Type':'application/json'}}
+      )
+    }
+
+    async getCustomerInfo(email){
+      return await axios.get("http://localhost:8080/apis/adminController/getcustomerbyemail",
+      {params:{email}})
+    }
+    async createCustomer(newCustomer){
+      return await axios.put("http://localhost:8080/apis/adminController/addcustomer",
+      newCustomer,{headers:{'Content-Type':'application/json'}})
+    }
+    async deleteCustomer(customerId){
+      return await axios.delete("http://localhost:8080/apis/adminController/deletecustomer",
+      {params :{customerId}}
+      )
+    }
+    async getAllCoupons(){
+      return await axios.get("http://localhost:8080/apis/adminController/getallCoupons")
+    }
+
 }
 export default  new AdminService();

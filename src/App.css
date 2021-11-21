@@ -1,12 +1,15 @@
 .App {
   text-align: center;
-  background-image: url("https://image.shutterstock.com/shutterstock/photos/1688061943/display_1500/stock-photo-the-shopping-cart-floating-out-of-the-online-store-on-a-blue-background-d-rendering-1688061943.jpg");
-  background-color: #cccccc;
+ 
+  background-color: #9c9c9c;
+  
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   height: 100vh;
+
+
   
 }
 
