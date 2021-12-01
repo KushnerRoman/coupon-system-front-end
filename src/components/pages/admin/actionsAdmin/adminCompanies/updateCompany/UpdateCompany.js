@@ -34,7 +34,7 @@ const handleSubmit=(values)=>{
     }
     console.log(companyToUpdate)
 
-    AdminService.updateCompany(companyToUpdate,currentCompany.id).then(
+    AdminService.updateCompany(companyToUpdate).then(
         response=>{
             
                alert('company was updated!' );

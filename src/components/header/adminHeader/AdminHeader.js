@@ -16,7 +16,7 @@ const handleLogput=()=>{
             <nav>
                 <ul>
                     <li>
-                <NavbarBrand href="/admin">Coupon Store</NavbarBrand>
+                <NavbarBrand href="/admin/wellcom/store">Coupon Store</NavbarBrand>
                     </li>
                     <li >
                         <NavLink activeClassName={classes.active} to ='/admin/companies'>Companies</NavLink>
@@ -25,7 +25,7 @@ const handleLogput=()=>{
                         <NavLink activeClassName={classes.active} to ="/admin/customers"> Customers </NavLink>
                     </li>
                      <li> 
-                        <NavLink activeClassName={classes.active} to ="/wellcom" onClick={handleLogput}> Logout </NavLink>
+                        <NavLink activeClassName={classes.active} to ="/wellcom/store" onClick={handleLogput}> Logout </NavLink>
                      </li>
              </ul>
             </nav>

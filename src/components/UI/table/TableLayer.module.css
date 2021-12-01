@@ -14,6 +14,9 @@
     
     
   }
+  .checkbox{
+    background-color: #3bf13bbe;
+  }
   .searchBar{
     width: 50%;
     border: 3px solid #0b393f;
@@ -58,5 +61,5 @@
     padding: 0 10%;
     text-align: center;
   }
-
+  
   

@@ -34,9 +34,16 @@ const handleSubmit=(values)=>{
             customerToCreate.email,customerToCreate.password
         ).then(
         response=>{
-            
+                if(history.location.pathname.includes('/admin/newcustomer')){
                alert('Customer was Created!' );
-               history.push('/admin/customers');
+               history.push('/admin/customers');}
+               else{
+                   AuthenticationService.login(
+                    customerToCreate.email,customerToCreate.password,'ROLE_Customer'
+                   ).then(
+                       ()=>history.push('customer/store')
+                   ) 
+               }
              
             
         },
@@ -73,10 +80,10 @@ const handleSubmit=(values)=>{
             <Form>
             <div className="container">
 	
-		<h3 className="my-4">Create New Customer</h3>
+		<h3 className="my-4">Customer Registration</h3>
 		<hr className="my-3" />
 		<div className="form-group mb-4 row">
-            <label className="col-md-5 col-form-label">Customer First Name</label>
+            <label className="col-md-5 col-form-label"> First Name</label>
 			<div className="col-md-7">
                 <Field 
                 type="text"
@@ -86,7 +93,7 @@ const handleSubmit=(values)=>{
                 </div>
 		</div>
         <div className="form-group mb-4 row">
-            <label className="col-md-5 col-form-label">Customer Last Name</label>
+            <label className="col-md-5 col-form-label"> Last Name</label>
 			<div className="col-md-7">
                 <Field 
                 type="text"
@@ -121,7 +128,7 @@ const handleSubmit=(values)=>{
 		<div className="form-group mb-3 row">
             <label  className="col-md-5 col-form-label"></label>
 			<div className="col-md-7">
-                <button className="btn btn-primary btn-lg" type="submit">Create !</button>
+                <button className="btn btn-primary btn-lg" type="submit">Submit !</button>
                 </div>
 		</div>
 	

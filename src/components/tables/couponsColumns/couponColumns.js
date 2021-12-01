@@ -6,44 +6,51 @@ export const COUPON_COLUMNS = [
         Header: 'ID',
         accessor: 'id',
         Filter :ColumnsFilter,
+        width:75
         
         
     },
     {
         Header: 'Title',        
         accessor:'title',
-        Filter :ColumnsFilter
-
+        Filter :ColumnsFilter,
+        width:200,
     },
     {
         Header: 'Description',      
         accessor:'description',
-        Filter :ColumnsFilter
+        Filter :ColumnsFilter,
+        width:300
     },
     {
         Header: 'Category',      
         accessor:'category',
-        Filter :ColumnsFilter
+        Filter :ColumnsFilter,
+        width:130
     },
     {
         Header: 'Image',      
         accessor:'image',
-        Filter :ColumnsFilter
+        Filter :ColumnsFilter,
+        width:200
     },
     {
         Header: 'Start Date',      
         accessor:'startDate',
-        Filter :ColumnsFilter
+        Filter :ColumnsFilter,
+        width:130
     },
     {
         Header: 'End Date',      
         accessor:'endDate',
-        Filter :ColumnsFilter
+        Filter :ColumnsFilter,
+        width:130
     },
     {
         Header: 'Price',      
         accessor:'price',
-        Filter :ColumnsFilter
+        Filter :ColumnsFilter,
+        width:120
     },
    
 ]

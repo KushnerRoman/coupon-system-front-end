@@ -1,13 +1,11 @@
 .App {
   text-align: center;
- 
-  background-color: #9c9c9c;
-  
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+  text-overflow: ellipsis;
+  overscroll-behavior-block: inherit;
+  background-color: #f5e3e3;
   background-size: cover;
-  height: 100vh;
+  background-position: center;
+
 
 
   

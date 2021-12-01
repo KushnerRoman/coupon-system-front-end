@@ -8,6 +8,7 @@ import UpdateCompany from './adminCompanies/updateCompany/UpdateCompany'
 import  {Form } from 'react-bootstrap'
 import AuthenticationService from '../../../../servicies/authenticationService/AuthenticationService'
 import {GrClose} from 'react-icons/gr'
+import UpdateCustomer from './adminCustomers/updateCustomer/UpdateCustomer'
 
 
 Modal.setAppElement('#root')
@@ -39,7 +40,7 @@ useEffect(() => {
     setValues(props.tableValues)
     fetchRef();
     
-}, [companyRef])
+}, [])
 
 const closeModal=()=>{
 
@@ -86,7 +87,7 @@ const showSelectedUserinfo=()=>{
     ) }  
     else if(history.location.pathname.includes('/admin/customer/actions')){
         return(
-          <h1>s</h1>
+          <UpdateCustomer customer={curretnsUser} showUpdate={setShowSelectedUser}/>
         )
     }
 } 

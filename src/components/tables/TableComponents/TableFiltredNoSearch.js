@@ -1,15 +1,76 @@
-import React,{useMemo,useEffect,useState} from 'react'
+import React,{useMemo,useEffect,useState, useContext} from 'react'
 
-import {useTable,useSortBy,useFilters,usePagination,useRowSelect, useMountedLayoutEffect, useResizeColumns} from 'react-table'
-
+import {useTable,useSortBy,useFilters,usePagination,useRowSelect, useMountedLayoutEffect,useBlockLayout, useResizeColumns} from 'react-table'
+import styled from 'styled-components'
 import TableLayer from '../../UI/table/TableLayer'
 import { GlobalFilter } from '../TableComponents/GlobalFilter'
 import classes from '../../UI/table/TableLayer.module.css'
 import { Checkbox } from '../TableComponents/CheckBox' 
+import '../table.css'
+import AuthContext from '../../../context/auth-context'
+
+const Styles = styled.div`
+  padding: 2rem;
+  border-spacing: 0;
+  border: 1px solid black;
+
+  .table {
+    
+    display: inline-block;
+   
+ 
+
+    .tr {
+      :last-child {
+        .td {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    .th,
+    .td {
+      margin: 0;
+      padding: 0.5rem;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+      overflow: hidden;
+      text-overflow: ellipsis; 
+      border: 1px solid #000000;
+      ${'' /* In this example we use an absolutely position resizer,
+       so this is required. */}
+      position: relative;
+
+      :last-child {
+        border-right: 0;
+        
+      }
+
+      .resizer {
+        display: inline-block;
+        background: blue;
+        width: 10px;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transform: translateX(50%);
+        z-index: 1;
+        ${'' /* prevents from scrolling while dragging on touch devices */}
+        touch-action:none;
+
+        &.isResizing {
+          background: red;
+        }
+      }
+    }
+  }
+`
 
 export  const SortingTableNoSearch=(props)=> {
     const [values,setValues]=useState(props.values);
     const [alert,setAlert]=useState(false)
+    const userAuth=useContext(AuthContext)
     const [selectedRowsValue,setSelectedRowsValue]=useState([])
     const columns=useMemo(()=>props.columns,[] )
     const data=useMemo(()=>values,[values])
@@ -26,21 +87,30 @@ const {getTableProps,getTableBodyProps,headerGroups,rows ,page,nextPage,previous
                
               }
             
-                },useFilters,useSortBy,usePagination,useRowSelect,useResizeColumns,hooks => {
+                },useFilters,useSortBy,usePagination,useRowSelect,useBlockLayout,useResizeColumns,hooks => {
                     hooks.visibleColumns.push(columns => [
+                     
 
                       {
                         id: 'selection',
-
+                        width:50,
+                        maxWidth:60,
+                           
                         Header: ({ getToggleAllRowsSelectedProps }) => (
-                          <div>
-                            <Checkbox {...getToggleAllRowsSelectedProps()} />
+                          <div className={classes.checkbox}>
+                              {
+                            !userAuth.isUserLoggedIn?<Checkbox {...getToggleAllRowsSelectedProps()} />:null
+                                } 
+                            
                           </div>
                         ),
 
                         Cell: ({ row }) => (
-                          <div>
-                            <Checkbox {...row.getToggleRowSelectedProps()} />
+                          <div  className={classes.checkbox}>
+                              {
+                                  !userAuth.isUserLoggedIn? <Checkbox {...row.getToggleRowSelectedProps()} /> : null
+                              }
+                           
                           </div>
                         ),
                       },
@@ -57,14 +127,21 @@ const {getTableProps,getTableBodyProps,headerGroups,rows ,page,nextPage,previous
 
 
  useMountedLayoutEffect(() => {
- 
+ console.log(props.values)
     setValues(props.values)
-    setSelectedRowsValue(selectedFlatRows.map(row=>row.values.id))
+    if(localStorage.getItem('user').includes('ROLE_Administrator')){
+        setSelectedRowsValue(selectedFlatRows.map(row=>row.values.email))
+    }if(localStorage.getItem('user').includes('ROLE_Company')){
+        setSelectedRowsValue(selectedFlatRows.map(row=>row.values.id))
+    }if(localStorage.getItem('user').includes('ROLE_Customer')){
+        setSelectedRowsValue(selectedFlatRows.map(row=>row.values.id))
+    }
+    
    
 
     console.log(values)
     console.log(selectedRowsValue)
-
+    // props.values,selectedFlatRows,setSelectedRowsValue
 },[props.values,selectedFlatRows,setSelectedRowsValue] )
 
 
@@ -87,13 +164,11 @@ const getCellValue = () => {
            
       
 }
-const actionAdminBar=()=>{
+const actionBar=()=>{
     return(
         <div className={classes.actionRows}>
           
             <button  className="btn btn-secondary btn-sm "  onClick={()=>props.onActions(selectedRowsValue)}> Check Selected   </button> 
-            
-
         </div>
         
     )
@@ -108,27 +183,30 @@ const searchTable=()=>{
    
         return(
            
-              
+              <>
                 
-            <TableLayer >
+            <div  >
                 <button  className="btn btn-secondary btn-sm "  onClick={()=>console.log(selectedRowsValue)}> log ROW  </button> 
                 
                 {
-                selectedFlatRows.length> 0?  actionAdminBar() : null
+                selectedFlatRows.length> 0?  actionBar() : null
             }
            
             <GlobalFilter /> 
-              
-            <table {...getTableProps()} className="table table-bordered table-hover table-dark">
-                <thead>
+              <div >
+
+             
+            <table className="table" {...getTableProps()} > 
+                <h6>Resize columns with the blue sticks</h6>
+                <thead >
                     {
                         headerGroups.map((headerGroup)=>(
-                            <tr {...headerGroup.getHeaderGroupProps()}>
+                            <tr className="tr" {...headerGroup.getHeaderGroupProps() }  >
                                 {
                                     headerGroup.headers.map(column=>(
-                                        <th {...column.getHeaderProps(column.getSortByToggleProps)} scope="col">{column.render('Header')}
-                                            <div>{column.canFilter? column.render('Filter'):null }</div>
-                                            <div
+                                        <th className='th' {...column.getHeaderProps(column.getSortByToggleProps)} scope="col">{column.render('Header')}
+                                            <h5 >{column.canFilter? column.render('Filter'):null }</h5>
+                                            <h5
                                                     {...column.getResizerProps()}
                                                     className={`resizer ${
                                                         column.isResizing ? 'isResizing' : ''
@@ -137,7 +215,7 @@ const searchTable=()=>{
                  
                                             <span>
                                                 {
-                                                    column.isSorted?(column.isSortedDesc ? 'B':'A'):''
+                                                    column.isSorted?(column.isSortedDesc ? '🔽':'🔼'):''
                                                 }
                                             </span>
                                         </th>
@@ -149,15 +227,15 @@ const searchTable=()=>{
                     }
                     
                 </thead>
-                <tbody {...getTableBodyProps()}>
+                <tbody  {...getTableBodyProps()}>
                     {
-                        page.map(row=>{
+                        page.map((row,i)=>{
                             prepareRow(row)
                             return(
-                                <tr {...row.getRowProps()}>
+                                <tr {...row.getRowProps()} className="tr">
                                     {
                                         row.cells.map((cell)=>{
-                                            return <td {...cell.getCellProps()} className="bg-primary" 
+                                            return <td className="td" {...cell.getCellProps()} 
                                             >
                                                 {cell.render('Cell')}
                                             </td>
@@ -177,9 +255,9 @@ const searchTable=()=>{
                   
           
                 
-            </table> 
+           
               
-            <div className={classes.pagesActions}>   
+            <h5 className={classes.pagesActions}>   
                     <select value={pageSize} onChange={e=>setPageSize(Number(e.target.value))}>
                         {
                             [5,10,20].map((pageSize)=>(
@@ -201,13 +279,14 @@ const searchTable=()=>{
                     <button className={classes.button} onClick={()=>nextPage()} disabled={!canNextPage}>Next</button>
                     <button className={classes.button} onClick={()=>gotoPage(pageCount-1)} disabled={!canNextPage}>{'>>'}</button>
                         
-                 </div>
+                 </h5>
              
                        
            
-            </TableLayer>
-           
-           
+            </table>
+            </div> 
+        </div>
+            </>
         )
 
       
@@ -218,12 +297,14 @@ const searchTable=()=>{
 
     return (
   
-        <div>
-            {searchTable()}
+            <Styles >
+                {searchTable()}
+            </Styles>
+            
         
             
             
-        </div>
+        
         
     )
    

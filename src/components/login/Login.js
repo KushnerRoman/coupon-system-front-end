@@ -42,10 +42,12 @@ export default function Login() {
                         default:
                             break;                                    
                     }
-                }, err => {
-                    setShowError(true)
-                    setError("Error ! WRONG email or password")
-
+                },   error => {
+                    if (error.response)
+                        setTimeout(() => { alert("Login Failed\n" + error.response.data.response) }, 0)
+                    else
+                        setTimeout(() => { alert("Servers are currently down, try again later.") }, 0)
+                    setError('password', '')
                 })
        
 

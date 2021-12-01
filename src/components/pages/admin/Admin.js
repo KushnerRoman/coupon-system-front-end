@@ -12,6 +12,7 @@ import AdminAction from './actionsAdmin/AdminAction';
 import AdminNewCompany from './actionsAdmin/adminCompanies/careateCompany/AdminNewCompany';
 import AdminNewCustomer from './actionsAdmin/adminCustomers/newCustomer/AdminNewCustomer';
 import { COUPON_COLUMNS } from '../../tables/couponsColumns/couponColumns';
+import Home from '../store/Home';
 
 
 export default function Admin() {
@@ -56,7 +57,9 @@ export default function Admin() {
                 <Route path='/admin/newcustomer'>
                     <AdminNewCustomer />
                 </Route>
-          
+          <Route path='/admin/wellcom/store'>
+            <Home/>
+          </Route>
             
            
             

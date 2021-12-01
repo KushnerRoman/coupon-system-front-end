@@ -22,7 +22,7 @@ class AdminService{
         return await axios.get("http://localhost:8080/apis/adminController/getallcustomers")
     }
     async getCompanyInfo(email){
-       return await axios.get("http://localhost:8080/apis/adminController/getcompanybyid",
+       return await axios.get("http://localhost:8080/apis/adminController/getcompanybyemail",
        {params:{email}})
     } 
 
@@ -32,7 +32,7 @@ class AdminService{
     }
     async deleteCompany(companyId){
       return await axios.delete("http://localhost:8080/apis/adminController/deletecompany",
-      {params :{companyId}}
+      {params :{companyId}},{headers:{'Content-Type':'application/json'}}
       )
     }
 
@@ -54,6 +54,11 @@ class AdminService{
       return await axios.delete("http://localhost:8080/apis/adminController/deletecustomer",
       {params :{customerId}}
       )
+    }
+
+    async updateCustomer(customer){
+      return await axios.post("http://localhost:8080/apis/adminController/updatecustomer",
+      customer,{headers:{'Content-Type':'application/json'}})
     }
     async getAllCoupons(){
       return await axios.get("http://localhost:8080/apis/adminController/getallCoupons")

@@ -28,7 +28,7 @@ export default function CompanyHeader() {
                        <NavLink activeClassName={classes.active} to ="/company/profile"> Profile </NavLink>
                    </li>
                    <li>
-                       <NavLink activeClassName={classes.active} to ="/wellcom/" onClick={()=>handleLogput()}> Logout  </NavLink>
+                       <NavLink activeClassName={classes.active} to ="/wellcom/store" onClick={()=>handleLogput()}> Logout  </NavLink>
                    </li>
                </ul>
            </nav>

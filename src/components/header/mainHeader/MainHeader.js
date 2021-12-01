@@ -16,7 +16,7 @@ export default function MainHeader(props){
             <nav>
                 <ul>
                     <li>
-                        <NavLink activeClassName={classes.active} to ="/wellcom/home"><AiFillHome /> Store </NavLink>
+                        <NavLink activeClassName={classes.active} to ="/wellcom/store"><AiFillHome /> Store </NavLink>
                     </li>
                     <li>
                         <NavLink activeClassName={classes.active} to ="/wellcom/login"><CgLogIn/> Login </NavLink>

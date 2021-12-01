@@ -1,0 +1,25 @@
+.coupon-title{
+    text-align: center;
+
+}
+.coupon-product{
+    margin-top: 20px;
+    
+    display: grid;
+    max-width: 1200px;
+    margin: 0 auto;
+    grid-template-columns: repeat(4,1fr) ;
+    gap:5px;
+  
+}
+
+@media(max-width: 1000px){
+    .coupon-product{
+        grid-template-columns: 1fr 1fr 
+    }
+}
+@media(max-width: 800px){
+    .coupon-product{
+        grid-template-columns: 1fr  ;
+    }
+}

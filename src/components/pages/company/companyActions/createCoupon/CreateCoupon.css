@@ -1,0 +1,38 @@
+
+#CompanyAddCoupon-title-div{
+    margin-left: 10%;
+    padding-right:30px;
+
+}
+#CompanyAddCoupon-description-div{
+    margin-left: 10%;
+    padding-right:30px;
+}
+#CompanyAddCoupon-price-div{
+    margin-left: 10%;
+    padding-right:30px;
+}
+#CompanyAddCoupon-start_date-div{
+    margin-left: 10%;
+    padding-right:30px;
+}
+
+#CompanyAddCoupon-image-div{
+    margin-left: 10%;
+    padding-right:30px;
+}
+#CompanyAddCoupon-category-div{
+    margin-left: 10%;
+    padding-right:30px;
+   
+}
+#CompanyAddCoupon-input{
+  border-radius: 3px;
+}
+.CompanyAddCoupon-div-seperator{
+   padding-top: 1%;
+  
+}
+.input-group{
+    padding-right: 10%;
+}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React,{ useContext, Suspense } from 'react';
 import { Router,Switch,Route } from 'react-router-dom';
 import MainHeader from './components/header/mainHeader/MainHeader'
 import history from './components/history'
@@ -9,16 +9,27 @@ import Admin from './components/pages/admin/Admin';
 import AdminHeader from './components/header/adminHeader/AdminHeader';
 import CompanyHeader from './components/header/companyHeader/CompanyHeader';
 import CompanySignup from './components/registration/CompanySignup';
-import Company from './components/pages/company/Company';
+//import Company from './components/pages/company/Company';
+//import Customer from './components/pages/customer/Customer';
+import CustomerSignup from './components/registration/CustomerSignup';
+import CustomerHeader from './components/header/customerHeader/CustomerHeader';
+import Categories from './components/pages/store/categories/Categories';
+import Home from './components/pages/store/Home';
+import AuthContext from './context/auth-context';
+
+const Customer= React.lazy(()=>import('./components/pages/customer/Customer'));
+const Company =React.lazy(()=>import('./components/pages/company/Company'))
 
 
 function App() {
 
+  const loggedUser=useContext(AuthContext)
 
 
-  if(!AuthenticationService.getCurrentUser()){
-    
-    history.push('/wellcom')
+  if(!AuthenticationService.getCurrentUser() ){
+  
+    history.push('/wellcom/store')
+    AuthenticationService.logOut();
   }else{
     switch(AuthenticationService.getCurrentUser().authorities[0].authority){
         case 'ROLE_Administrator':
@@ -28,16 +39,17 @@ function App() {
           break;
         case 'ROLE_Company':
           if(!history.location.pathname.includes('/company')){
-            history.push('/company');
+            history.push('/company/coupons');
           }
           break;
         case 'ROLE_Customer':
           if(!history.location.pathname.includes('/customer')){
-             history.push('/customer');
+             history.push('/wellcom/store');
           }
           break;
           default:
-            break;
+            AuthenticationService.logOut();
+            history.push('/wellcom/store')
     }
   }
 
@@ -45,30 +57,37 @@ function App() {
 
 const getHeader=()=>{
   return( 
-  <Switch>
-    <Route path='/wellcom'  >
+    <Suspense  fallback={<p>Loading...</p>}>
+       <Switch>
+    <Route path='/wellcom'   >
       <MainHeader />
     </Route>
     <Route path='/admin'>
       <AdminHeader/>
     </Route>
+    <Route path='/customer'>
+      <CustomerHeader/>
+    </Route>
     <Route path='/company'>
       <CompanyHeader/>
     </Route>
-  </Switch>)
+  </Switch>
+    </Suspense>
+ )
  
 }
 const displayPage=()=>{
   return(
-    <Switch>
+    <Suspense fallback={<p>Loading...</p>}>
+       <Switch>
       <Route path='/wellcom/login'>
         <Login />
       </Route>
       <Route path='/admin'>
         <Admin />
       </Route>
-      <Route path='/customer'>
-      
+      <Route path='/customer' >
+        <Customer />
       </Route>
       <Route path='/company'>
         <Company />
@@ -77,7 +96,16 @@ const displayPage=()=>{
       <Route path='/wellcom/signup/company' >
         <CompanySignup/>
       </Route>
+      <Route path='/wellcom/signup/customer' >
+        <CustomerSignup/>
+      </Route>
+      <Route path={['/wellcom/store','/customer/store','/compnay/home']} >
+        <Home/>
+      </Route>
+     
     </Switch>
+    </Suspense>
+   
     
   )
 }

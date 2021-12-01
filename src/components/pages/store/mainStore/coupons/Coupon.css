@@ -1,0 +1,46 @@
+
+.coupon-item{
+    border:1px solid rgb(233, 225, 225);
+    background:rgb(255, 255, 255) ;
+    height: 360px;
+    border-radius: 5px;
+    overflow: hidden;
+    text-align: center;
+    border:2px solid rgb(51, 29, 29) ;
+    box-sizing: border-box;
+}
+.coupon-item-image{
+    background-size: cover;
+    background-position: center;
+    height:150px;
+    width: 100%;
+}
+.coupon-btn{
+    outline: none;
+    background-color: black;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    padding: 4px 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 4px 0;
+
+}
+.coupon-item > .title{
+    font-size: 20px;
+    font-weight: bold;
+}
+.coupon-item > .description{
+    color: #666;
+}
+.coupon-item > .price{
+    font-style: italic;
+    color: rgb(0, 0, 0);
+}
+.coupon-item > .endDate{
+    font-style: italic;
+    color: black;
+}
+
