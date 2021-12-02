@@ -78,7 +78,7 @@ const buyCoupon=(coupon)=>{
             if(error.response.status===500){
                 history.push('/customer/coupons')
             }if(error.response.status===400){
-                alert('Error Check if coupon already axist or the date is expired ')
+               
                 props.message('Error Check if coupon already axist or the date is expired')
                 props.showError();
                 
@@ -99,10 +99,7 @@ const buyCoupon=(coupon)=>{
             </div>
              
                 <h2 className="coupon-title" >Popular Coupons</h2>
-                <button className="coupon-btn" 
-                    onClick={()=>console.log(coupons)}>
-                       Cuurent 
-                    </button>
+             
             <Container>
            
                 {showCoupons()}
