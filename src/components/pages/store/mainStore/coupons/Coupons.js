@@ -3,17 +3,23 @@ import { Image } from 'react-bootstrap'
 import './Coupon.css'
 import AuthContext from '../../../../../context/auth-context'
 import history from '../../../../history'
+import Button from '../../../../UI/button/Button'
 
 export default function Coupons(props) {
     const [curretnCoupon,setCurrentCoupon]=useState(props.coupon);
     const currentUser=useContext(AuthContext)
+    const [loggedIn,setLoggedIn]=useState(false);
 
     useEffect(() => {
-        
+          if(currentUser.isUserLoggedIn){
+              setLoggedIn(true)
+          }  
+
+
         setCurrentCoupon(props.coupon)
+        
 
-
-    }, [props.coupon])
+    }, [props.coupon,currentUser])
     return (
         
             <div className="coupon-item">
@@ -26,20 +32,17 @@ export default function Coupons(props) {
                
                
                 {
-                    !currentUser.isUserLoggedIn?<button className="coupon-btn"
+                    !loggedIn?<button className="coupon-btn"
                                                  onClick={()=>history.push('/wellcom/login' )}>
                                 Login!                          
                     </button>:
-                    <button className="coupon-btn" 
+                    <Button  
                     onClick={()=>props.buy(curretnCoupon)}>
                         Buy!
-                    </button>
+                    </Button>
                 }
                     
-                    <button className="coupon-btn" 
-                    onClick={()=>console.log(curretnCoupon)}>
-                       Cuurent 
-                    </button>
+                    
 
             </div>
         

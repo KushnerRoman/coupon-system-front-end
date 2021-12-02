@@ -1,0 +1,20 @@
+.button {
+    outline: none;
+    background-color: black;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    padding: 4px 15px;
+    margin: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  
+  .button:hover,
+  .button:active {
+    background: #741188;
+    border-color: #741188;
+  }
+  
+  .button:focus {
+    outline: none;
+  }

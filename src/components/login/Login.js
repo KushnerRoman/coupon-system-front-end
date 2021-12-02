@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useContext, useState} from 'react'
 import Card from '../UI/card/Card'
 import classes from './Login.module.css'
 import { Form } from 'react-bootstrap';
@@ -6,8 +6,11 @@ import {  FormGroup, Input, Label, Button } from 'reactstrap';
 import history from '../history';
 import AuthenticationService from '../../servicies/authenticationService/AuthenticationService';
 import { Alert } from 'react-bootstrap';
+import AuthContext from '../../context/auth-context';
+import ErrorModal from '../UI/modal/errorModal/ErrorModal';
 
 export default function Login() {
+    const userContext=useContext(AuthContext)
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState('');
     const [role,setRole]=useState('')
@@ -23,25 +26,40 @@ export default function Login() {
                 userName, password,role
             ).then(
                 () => {
-                    switch (role){
-                        case 'ROLE_Administrator':
+                        let checkRole=AuthenticationService.getCurrentUser();
+                            if(checkRole.authorities){
+                                if(role===AuthenticationService.getCurrentUser().authorities[0].authority){
+                                    switch (role){
+                                        case 'ROLE_Administrator':
+                                            
+                                            history.push('/admin')
+                                            break;
+                                        case 'ROLE_Customer':
+                                          
+                                            history.push('/customer')
+                                            userContext.onCustomerLogin()
+                                            break;
+                                        case 'ROLE_Company':
+                                           
+                                            history.push('/company')
+                                            break;
+                                        case '0':
+                                            alert('Please choose type of login user ')   
+                                            break;
+                                        default:
+                                            break;                                    
+                                    }
+                                }else{
+                                   
                             
-                            history.push('/admin')
-                            break;
-                        case 'ROLE_Customer':
-                          
-                            history.push('/customer')
-                            break;
-                        case 'ROLE_Company':
-                           
-                            history.push('/company')
-                            break;
-                        case '0':
-                            alert('Please choose type of login user ')   
-                            break;
-                        default:
-                            break;                                    
+                            }
+
+                    
+                    }else{
+                      AuthenticationService.logOut()
+                      setShowError(true)
                     }
+                  
                 },   error => {
                     if (error.response)
                         setTimeout(() => { alert("Login Failed\n" + error.response.data.response) }, 0)
@@ -57,10 +75,9 @@ export default function Login() {
 
     return(
         <div>
+            
               {
-                showError?<Alert variant="danger" onClose={() => setShowError(false)} dismissible>
-                <Alert.Heading>{error}</Alert.Heading>
-              </Alert>:null
+                showError?<ErrorModal title="Error ! " message="Please choose right Role"  onClick={() => setShowError(false)}/>:null
             }
              <Card className={classes.login}>
                 <Form onSubmit={doLogin}>

@@ -197,7 +197,7 @@ const searchTable=()=>{
 
              
             <table className="table" {...getTableProps()} > 
-                <h6>Resize columns with the blue sticks</h6>
+                <td>Resize columns with the blue sticks</td>
                 <thead >
                     {
                         headerGroups.map((headerGroup)=>(
@@ -205,8 +205,8 @@ const searchTable=()=>{
                                 {
                                     headerGroup.headers.map(column=>(
                                         <th className='th' {...column.getHeaderProps(column.getSortByToggleProps)} scope="col">{column.render('Header')}
-                                            <h5 >{column.canFilter? column.render('Filter'):null }</h5>
-                                            <h5
+                                            <td >{column.canFilter? column.render('Filter'):null }</td>
+                                            <td
                                                     {...column.getResizerProps()}
                                                     className={`resizer ${
                                                         column.isResizing ? 'isResizing' : ''
@@ -257,7 +257,7 @@ const searchTable=()=>{
                 
            
               
-            <h5 className={classes.pagesActions}>   
+            <td className={classes.pagesActions}>   
                     <select value={pageSize} onChange={e=>setPageSize(Number(e.target.value))}>
                         {
                             [5,10,20].map((pageSize)=>(
@@ -279,7 +279,7 @@ const searchTable=()=>{
                     <button className={classes.button} onClick={()=>nextPage()} disabled={!canNextPage}>Next</button>
                     <button className={classes.button} onClick={()=>gotoPage(pageCount-1)} disabled={!canNextPage}>{'>>'}</button>
                         
-                 </h5>
+                 </td>
              
                        
            

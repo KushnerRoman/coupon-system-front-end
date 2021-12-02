@@ -1,25 +1,24 @@
 import React,{ useContext, Suspense } from 'react';
 import { Router,Switch,Route } from 'react-router-dom';
-import MainHeader from './components/header/mainHeader/MainHeader'
 import history from './components/history'
 import './App.css';
 import AuthenticationService from './servicies/authenticationService/AuthenticationService';
-import Login from './components/login/Login';
-import Admin from './components/pages/admin/Admin';
-import AdminHeader from './components/header/adminHeader/AdminHeader';
-import CompanyHeader from './components/header/companyHeader/CompanyHeader';
-import CompanySignup from './components/registration/CompanySignup';
-//import Company from './components/pages/company/Company';
-//import Customer from './components/pages/customer/Customer';
-import CustomerSignup from './components/registration/CustomerSignup';
-import CustomerHeader from './components/header/customerHeader/CustomerHeader';
 import Categories from './components/pages/store/categories/Categories';
-import Home from './components/pages/store/Home';
 import AuthContext from './context/auth-context';
+
 
 const Customer= React.lazy(()=>import('./components/pages/customer/Customer'));
 const Company =React.lazy(()=>import('./components/pages/company/Company'))
-
+const CustomerSignup =React.lazy(()=>import('./components/registration/CustomerSignup'));
+const CustomerHeader=React.lazy(()=>import('./components/header/customerHeader/CustomerHeader'));
+const Home=React.lazy(()=>import('./components/pages/store/Home'));
+const PageNotFound=React.lazy(()=>import('./components/pages/notFound/PageNotFound'));
+const MainHeader=React.lazy(()=>import('./components/header/mainHeader/MainHeader'));
+const Login=React.lazy(()=>import('./components/login/Login'));
+const Admin=React.lazy(()=>import('./components/pages/admin/Admin'));
+const AdminHeader=React.lazy(()=>import('./components/header/adminHeader/AdminHeader'));
+const CompanyHeader=React.lazy(()=>import('./components/header/companyHeader/CompanyHeader'));
+const CompanySignup=React.lazy(()=>import('./components/registration/CompanySignup'));
 
 function App() {
 
@@ -30,7 +29,9 @@ function App() {
   
     history.push('/wellcom/store')
     AuthenticationService.logOut();
-  }else{
+  }
+   
+  else{
     switch(AuthenticationService.getCurrentUser().authorities[0].authority){
         case 'ROLE_Administrator':
           if(!history.location.pathname.includes('/admin')){
@@ -71,6 +72,7 @@ const getHeader=()=>{
     <Route path='/company'>
       <CompanyHeader/>
     </Route>
+   
   </Switch>
     </Suspense>
  )
@@ -102,8 +104,11 @@ const displayPage=()=>{
       <Route path={['/wellcom/store','/customer/store','/compnay/home']} >
         <Home/>
       </Route>
-     
+      <Route path='*'>
+        <PageNotFound/>
+        </Route> 
     </Switch>
+    
     </Suspense>
    
     

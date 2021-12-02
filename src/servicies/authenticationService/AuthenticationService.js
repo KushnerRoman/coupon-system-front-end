@@ -14,7 +14,7 @@ class AuthenticationService{
             }
             console.log(localStorage.getItem('user'));
             return response.data;
-        } catch (err) {
+        } catch (err) { 
             console.log(err);
             throw err;
         }

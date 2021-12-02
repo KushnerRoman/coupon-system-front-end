@@ -62,7 +62,8 @@ export const AuthContextProvider = (props)=>{
 
             if(AuthenticationService.getCurrentUser()){
                 let user = await AuthenticationService.getCurrentUser().username;
-            let role= await AuthenticationService.getCurrentUser().authorities[0].authority
+                
+                    let role= await AuthenticationService.getCurrentUser().authorities[0].authority
                 setUsername(user)
             switch (role){
                 case 'ROLE_Administrator':
@@ -70,6 +71,7 @@ export const AuthContextProvider = (props)=>{
                     
                     break;
                 case 'ROLE_Customer':
+                    setIsUserLoggedIn(true)
                    getLocalUser();
                     break;
                 case 'ROLE_Company':
@@ -78,12 +80,14 @@ export const AuthContextProvider = (props)=>{
                 default:
                     break;            
              }
+                
+            
             }
 
         }
         
         localUserLoginCheck();
-        //getLocalUser()
+        
 
          
      },[]) 

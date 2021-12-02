@@ -8,13 +8,14 @@ import Categories from '../categories/Categories';
 import './MainStore.css'
 import Coupons from './coupons/Coupons';
 import history from '../../../history';
+import ErrorModal from '../../../UI/modal/errorModal/ErrorModal';
 
 export default function  MainStore(props) {
 const [coupons,setCoupons]=useState([]);
 const [error,setError]=useState('');
 const [companies,setCompanies]=useState([]);
 const userContext = useContext(AuthContext)
-
+const [showError,setShowError]=useState(false)
 
 
 async function fetchAllCompanies(){
@@ -51,6 +52,7 @@ const showCoupons=()=>{
     
     return(
         <div className="coupon-product">
+             
         {coupons.map(coupon=>{
             return(
                 // <Col key={coupon.id}>
@@ -62,6 +64,7 @@ const showCoupons=()=>{
                 
             )
         })}
+     
     </div>
     )
 }
@@ -70,7 +73,17 @@ const buyCoupon=(coupon)=>{
     console.log(coupon)
     CustomerService.buyCoupon(coupon).then(
         response=>{
-            alert('coupon was added !')
+            console.log(response)
+        },error=>{
+            if(error.response.status===500){
+                history.push('/customer/coupons')
+            }if(error.response.status===400){
+                alert('Error Check if coupon already axist or the date is expired ')
+                props.message('Error Check if coupon already axist or the date is expired')
+                props.showError();
+                
+            }
+            
         }
     )
 
@@ -79,13 +92,19 @@ const buyCoupon=(coupon)=>{
 
     return (
         <div >
-           
+            <div>
+            {
+                showError?<ErrorModal title="Error ! " message="Please choose right Role"  onClick={() => setShowError(false)}/>:null
+            }
+            </div>
+             
                 <h2 className="coupon-title" >Popular Coupons</h2>
                 <button className="coupon-btn" 
                     onClick={()=>console.log(coupons)}>
                        Cuurent 
                     </button>
             <Container>
+           
                 {showCoupons()}
             </Container>
         </div>
