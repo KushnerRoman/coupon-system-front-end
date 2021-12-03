@@ -97,12 +97,7 @@ const buyCoupon=(coupon)=>{
                 showError?<ErrorModal title="Error ! " message="Please choose right Role"  onClick={() => setShowError(false)}/>:null
             }
             </div>
-             
                 <h2 className="coupon-title" >Popular Coupons</h2>
-                <button className="coupon-btn" 
-                    onClick={()=>console.log(coupons)}>
-                       Cuurent 
-                    </button>
             <Container>
            
                 {showCoupons()}
