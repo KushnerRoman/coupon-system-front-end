@@ -42,6 +42,10 @@ useEffect(() => {
     fetchCoupons();
         
 }, [])
+const checkpu = ()=>{
+
+    
+}
 
 
 
@@ -78,7 +82,7 @@ const buyCoupon=(coupon)=>{
             if(error.response.status===500){
                 history.push('/customer/coupons')
             }if(error.response.status===400){
-                alert('Error Check if coupon already axist or the date is expired ')
+               
                 props.message('Error Check if coupon already axist or the date is expired')
                 props.showError();
                 
@@ -98,6 +102,10 @@ const buyCoupon=(coupon)=>{
             }
             </div>
                 <h2 className="coupon-title" >Popular Coupons</h2>
+<<<<<<< HEAD
+=======
+             
+>>>>>>> a695dd76ac75fdca18b486c92227949f3bf7cde3
             <Container>
            
                 {showCoupons()}
